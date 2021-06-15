@@ -20,8 +20,10 @@ module Generated
         URI("#{@origin}?#{ spiders.collect { |x| 'spiders[]=' + x.to_s }.join('&') }")
       end
 
-      def get(spiders)
+      def get(spiders, &block)
         req = Net::HTTP::Get.new(get_uri(spiders))
+
+        block.call(req) if block_given?
 
         @http.request(req)
       end

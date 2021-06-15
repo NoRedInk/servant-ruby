@@ -20,9 +20,11 @@ module Generated
         URI("#{@origin}")
       end
 
-      def post(body:)
+      def post(body:, &block)
         req = Net::HTTP::Post.new(post_uri())
         req["Content-Type"] = "application/json"
+
+        block.call(req) if block_given?
 
         @http.request(req, body)
       end

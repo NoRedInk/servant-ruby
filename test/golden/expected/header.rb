@@ -20,9 +20,11 @@ module Generated
         URI("#{@origin}")
       end
 
-      def post(moth:)
+      def post(moth:, &block)
         req = Net::HTTP::Post.new(post_uri())
         req["moth"] = moth
+
+        block.call(req) if block_given?
 
         @http.request(req)
       end

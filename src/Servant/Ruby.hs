@@ -97,8 +97,10 @@ data NameSpace = NameSpace
 --     URI("#{@origin}")
 --   end
 -- <BLANKLINE>
---   def get()
+--   def get(&block)
 --     req = Net::HTTP::Get.new(get_uri())
+-- <BLANKLINE>
+--     block.call(req) if block_given?
 -- <BLANKLINE>
 --     @http.request(req)
 --   end
@@ -129,8 +131,10 @@ data NameSpace = NameSpace
 --         URI("#{@origin}")
 --       end
 -- <BLANKLINE>
---       def get()
+--       def get(&block)
 --         req = Net::HTTP::Get.new(get_uri())
+-- <BLANKLINE>
+--         block.call(req) if block_given?
 -- <BLANKLINE>
 --         @http.request(req)
 --       end
@@ -166,12 +170,14 @@ data NameSpace = NameSpace
 --     URI("#{@origin}/foo/#{foo_id}?barId=#{bar_id}&#{ ids.collect { |x| 'ids[]=' + x.to_s }.join('&') }")
 --   end
 -- <BLANKLINE>
---   def post_foo_by_foo_id(foo_id, bar_id, ids, body:, max_forwards:)
+--   def post_foo_by_foo_id(foo_id, bar_id, ids, body:, max_forwards:, &block)
 --     foo_id = if foo_id.kind_of?(Array) then foo_id.join(',') else foo_id end
 -- <BLANKLINE>
 --     req = Net::HTTP::Post.new(post_foo_by_foo_id_uri(foo_id, bar_id, ids))
 --     req["Content-Type"] = "application/json"
 --     req["Max-Forwards"] = max_forwards
+-- <BLANKLINE>
+--     block.call(req) if block_given?
 -- <BLANKLINE>
 --     @http.request(req, body)
 --   end
@@ -245,6 +251,7 @@ public indent req =
       ++ [ Just $ "  req = Net::HTTP::" <> method <> ".new(" <> functionName <> "_uri(" <> callArgsStr <> "))"
          ]
       ++ requestHeaders
+      ++ callBlockIfProvided
       ++ [ Nothing,
            Just $ "  @http.request" <> request,
            Just "end"
@@ -284,7 +291,7 @@ public indent req =
     callArgs = captures ++ (paramToCallArg <$> queryparams)
 
     allArgsStr :: Text
-    allArgsStr = T.intercalate ", " (args ++ bodyAndHeader)
+    allArgsStr = T.intercalate ", " (args ++ bodyAndHeader ++ ["&block"])
 
     args :: [Text]
     args = captures ++ (paramToArg <$> queryparams)
@@ -334,6 +341,10 @@ public indent req =
 
     rawHeaders :: [Text]
     rawHeaders = (^. headerArg . argName . _PathSegment) <$> hs
+
+    callBlockIfProvided :: [Maybe Text]
+    callBlockIfProvided =
+      [Nothing, Just "  block.call(req) if block_given?"]
 
     method :: Text
     method =

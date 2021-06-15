@@ -20,8 +20,10 @@ module Generated
         URI("#{@origin}?#{vw_beetle ? 'vw-beetle' : ''}")
       end
 
-      def get(vw_beetle: false)
+      def get(vw_beetle: false, &block)
         req = Net::HTTP::Get.new(get_uri(vw_beetle: vw_beetle))
+
+        block.call(req) if block_given?
 
         @http.request(req)
       end

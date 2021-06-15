@@ -20,8 +20,10 @@ module Generated
         URI("#{@origin}/hello/world")
       end
 
-      def get_hello_world()
+      def get_hello_world(&block)
         req = Net::HTTP::Get.new(get_hello_world_uri())
+
+        block.call(req) if block_given?
 
         @http.request(req)
       end

@@ -22,10 +22,12 @@ module Generated
         URI("#{@origin}/#{butterfly}")
       end
 
-      def get_by_butterfly(butterfly)
+      def get_by_butterfly(butterfly, &block)
         butterfly = if butterfly.kind_of?(Array) then butterfly.join(',') else butterfly end
 
         req = Net::HTTP::Get.new(get_by_butterfly_uri(butterfly))
+
+        block.call(req) if block_given?
 
         @http.request(req)
       end
