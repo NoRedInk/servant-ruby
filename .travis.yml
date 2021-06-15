@@ -2,3 +2,17 @@ language: haskell
 ghc:
   - "8.8.4" # nix 20.09 default
   - "8.10.4" # nix 21.05 default
+
+cache:
+  directories:
+  - "$HOME/.cabal/store"
+
+install:
+  - |
+    ghc --version
+    cabal --version
+    cabal new-update
+    cabal new-build --enable-tests --enable-benchmarks
+
+script:
+  - cabal new-test --enable-tests
