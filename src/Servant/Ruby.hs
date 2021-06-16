@@ -80,6 +80,7 @@ data NameSpace = NameSpace
 -- require "json"
 -- require "net/http"
 -- require "uri"
+-- require "resolv-replace"
 -- <BLANKLINE>
 -- class Baz
 --   def initialize(origin, timeout = nil)
@@ -110,6 +111,7 @@ data NameSpace = NameSpace
 -- require "json"
 -- require "net/http"
 -- require "uri"
+-- require "resolv-replace"
 -- <BLANKLINE>
 -- module Foo
 --   module Bar
@@ -147,6 +149,7 @@ data NameSpace = NameSpace
 -- require "json"
 -- require "net/http"
 -- require "uri"
+-- require "resolv-replace"
 -- <BLANKLINE>
 -- class Foo
 --   def initialize(origin, timeout = nil)
@@ -206,6 +209,7 @@ imports =
   [ "require \"json\"",
     "require \"net/http\"",
     "require \"uri\"",
+    "require \"resolv-replace\"",
     ""
   ]
 

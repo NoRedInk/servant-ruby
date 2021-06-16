@@ -1,6 +1,7 @@
 require "json"
 require "net/http"
 require "uri"
+require "resolv-replace"
 
 module Generated
   module V1
