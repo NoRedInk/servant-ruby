@@ -1,7 +1,7 @@
 name:                servant-ruby
 version:             0.9.0.0
 synopsis:            Generate a Ruby client from a Servant API with Net::HTTP.
-description:         Generate a Ruby client from a Servant API with Net::HTTP.
+description:         Generate a Ruby client from a Servant API with Net::HTTP. :)
 homepage:            https://github.com/joneshf/servant-ruby#readme
 license:             BSD3
 license-file:        LICENSE
@@ -12,7 +12,7 @@ category:            Servant, Web
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
-tested-with:         GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.2
+tested-with:         GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.2, GHC == 8.8.4, GHC == 8.10.4
 
 library
   hs-source-dirs:      src
@@ -39,7 +39,7 @@ test-suite golden-test
   hs-source-dirs:      test/golden
   build-depends:       base
                      , bytestring >= 0.10.8.2
-                     , servant >= 0.9 && < 0.16
+                     , servant >= 0.9 && < 0.19
                      , servant-foreign >= 0.9 && < 0.16
                      , servant-ruby
                      , tasty >= 0.11.3
